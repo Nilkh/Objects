@@ -99,7 +99,7 @@ The second way to access a key's value is by using bracket notation (`[ ]`).
 You have already used bracket notation when indexing an array:
 
 ```js
-const abs = ['A', 'B', 'C'; 
+const abc = ['A', 'B', 'C']; 
 
 console.log(abc[0]);
 
@@ -143,7 +143,7 @@ Open [./exercises/secretMission.js](./exercises/secretMission.js) and follow the
 
 Once we've defined an object, we're not stuck with all the properties we initially wrote. Objects are mutable, which means we can update them after creating them.
 
-To add new key-value pairs to an object or change an existing property, we can use either dot notation (`.`) or bracket notation (`[]`) along with the assignment operator (`=`).
+To add new key-value pair to an object or change an existing property, we can use either dot notation (`.`) or bracket notation (`[]`) along with the assignment operator (`=`).
 Here's how we can perform property assignment:
 
 
@@ -287,12 +287,52 @@ let paintIt = obj => {
  
 paintIt(spaceship);
  
-spaceship.color 
+console.log(spaceship.color)
 ```
+
+Let's take another look at reasigning objects by refference:
+
+```js
+//passing by value
+let apple = "fruit"
+let peach = apple
+console.log(`apple is a ${apple}, and peach is a ${peach}`)
+peach = "summer fruit"
+console.log(`apple is a ${apple}, and peach is a ${peach}`)
+
+//passing by reference
+let apple = {type: "fruit"}
+let peach = apple
+console.log(apple,peach)
+
+peach.type = "summer fruit"
+console.log(apple,peach)
+```
+
+- First we assign the value `"fruit"` to the variable `apple` and then assign the value of `apple` to the variable `peach`. Both `apple` and `peach` now hold the same string value `"fruit"`. 
+
+
+- We reassign the value of `peach` to `"summer fruit"`. This reassignment does not affect the value of `apple`, as they are separate variables. 
+
+- We create an object with a property `type` set to `"fruit"`, and assign it to the variable `apple`. Then, we assign the reference of the `apple` object to the variable `peach`. Both `apple` and `peach` now reference the same object in memory. The `console.log()` statement prints the values of `apple` and `peach`, which display the object's contents, resulting in the output: `{type: "fruit"}` (twice).
+
+- Finaly, we modify the `type` property of the `peach` object to `"summer fruit"`. Since `apple` and `peach` reference the same object, the modification affects both variables. The `console.log()` statement prints the updated values of `apple` and `peach`, which display the modified object's contents, resulting in the output: `{type: "summer fruit"}` (twice).
+
+To summarize, the code demonstrates how assigning variables works for primitive types like strings and objects. Assigning a primitive type creates independent copies of the value, while assigning an object creates a reference to the same object in memory. Modifying an object through one variable will affect all variables that reference that object.
+
  
 Our function `paintIt()` permanently changed the color of our `spaceship` object. However, reassignment of the `spaceship` variable wouldn’t work in the same way:
 
 ```js
+let apple = {type: "fruit"}
+let peach = {...apple}
+console.log(apple,peach)
+
+peach.type = "summer fruit"
+console.log(apple,peach)
+
+//in a function
+
 let spaceship = {
   homePlanet : 'Earth',
   color : 'red'
@@ -306,12 +346,8 @@ let tryReassignment = obj => {
  
 };
 tryReassignment(spaceship) 
-spaceship 
+console.log(spaceship) 
  
-spaceship = {
-  identified : false, 
-  'transport type': 'flying'
-};
 ```
 
 Let’s look at what happened in the code example:
